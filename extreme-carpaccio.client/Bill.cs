@@ -3,5 +3,6 @@
     class Bill
     {
         public decimal total { get; set; }
+
     }
 }
