@@ -7,10 +7,10 @@ using NUnit.Framework;
 
 namespace extrem_carpaccio.tests
 {
-    public class SomethingShould
+    public class CarpaccioTests
     {
         [Test]
-        public void DoSomething()
+        public void Something()
         {
             Assert.IsFalse(false);
         }
