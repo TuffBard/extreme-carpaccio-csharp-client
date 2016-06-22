@@ -63,33 +63,40 @@ namespace xCarpaccio.client
                 }
 
                 //Application de la taxes
-                bill.total *= 1m+(taxes[order.Country] / 100m);
+                if(taxes.ContainsKey(order.Country))
+                    bill.total *= 1m+(taxes[order.Country] / 100m);
 
                 //Application d'une reducion standard selon le montant total
-                if (bill.total >= 50000)
+                if (order.Reduction == "STANDARD")
                 {
-                    bill.total *= 0.85m;
+                    if (bill.total >= 50000)
+                    {
+                        bill.total *= 0.85m;
+                    }
+                    else if (bill.total >= 10000)
+                    {
+                        bill.total *= 0.90m;
+                    }
+                    else if (bill.total >= 7000)
+                    {
+                        bill.total *= 0.93m;
+                    }
+                    else if (bill.total >= 5000)
+                    {
+                        bill.total *= 0.95m;
+                    }
+                    else if (bill.total >= 1000)
+                    {
+                        bill.total *= 0.97m;
+                    }
                 }
-                else if (bill.total >= 10000)
+                else
                 {
-                    bill.total *= 0.90m;
-                }
-                else if (bill.total >= 7000)
-                {
-                    bill.total *= 0.93m;
-                }
-                else if (bill.total >= 5000)
-                {
-                    bill.total *= 0.95m;
-                }
-                else if (bill.total >= 1000)
-                {
-                    bill.total *= 0.97m;
+                    bill = null;
                 }
 
                 // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
                 // Else return a HTTP 404 error : return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
-                Console.WriteLine("Total: " + bill.total);
                 return bill;
             };
 
